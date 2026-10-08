@@ -90,3 +90,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+/* ============================================
+   ADMIN PANEL ANIMATIONS
+   ============================================ */
+
+// Анимация цифр в статистике
+document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseInt(el.getAttribute('data-count'));
+    const duration = 1500;
+    const startTime = performance.now();
+
+    const animate = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+
+        el.textContent = Math.floor(target * eased).toLocaleString('ru-RU');
+
+        if (progress < 1) requestAnimationFrame(animate);
+        else el.textContent = target.toLocaleString('ru-RU');
+    };
+
+    requestAnimationFrame(animate);
+});
+
+// Анимация прогресс-баров GPU
+const progressObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const fill = entry.target;
+            const width = fill.getAttribute('data-width');
+            setTimeout(() => { fill.style.width = width + '%'; }, 200);
+            progressObserver.unobserve(fill);
+        }
+    });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.progress-fill').forEach(fill => {
+    progressObserver.observe(fill);
+});
+
+// Кнопка выхода
+const logoutBtn = document.getElementById('logoutBtn');
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+        if (confirm('Выйти из админ-панели?')) {
+            window.location.href = 'index.html';
+        }
+    });
+}
