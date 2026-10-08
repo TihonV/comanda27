@@ -107,7 +107,64 @@
     </style>
 </head>
 <body>
+<!-- ============================================
+     ФОНОВАЯ ГЕОМЕТРИЯ
+     ============================================ -->
+<div class="background-decor" id="backgroundDecor">
 
+    <!-- SVG-градиент (один раз на страницу) -->
+    <svg width="0" height="0" style="position:absolute;">
+        <defs>
+            <linearGradient id="gradGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2ecc71" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#16a34a" stop-opacity="0.2"/>
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- Треугольник 1 -->
+    <div class="decor-shape triangle-1" data-speed="0.4">
+        <svg viewBox="0 0 100 100">
+            <polygon points="50,10 90,85 10,85"/>
+        </svg>
+    </div>
+
+    <!-- Треугольник 2 -->
+    <div class="decor-shape triangle-2" data-speed="0.6">
+        <svg viewBox="0 0 100 100">
+            <polygon points="50,10 90,85 10,85"/>
+        </svg>
+    </div>
+
+    <!-- Гексагон -->
+    <div class="decor-shape hexagon" data-speed="0.3">
+        <svg viewBox="0 0 100 100">
+            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5"/>
+        </svg>
+    </div>
+
+    <!-- Кольцо -->
+    <div class="decor-shape ring" data-speed="0.5">
+        <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45"/>
+            <circle cx="50" cy="50" r="30" opacity="0.5"/>
+        </svg>
+    </div>
+
+    <!-- Маленький треугольник -->
+    <div class="decor-shape triangle-small" data-speed="0.8">
+        <svg viewBox="0 0 100 100">
+            <polygon points="50,10 90,85 10,85"/>
+        </svg>
+    </div>
+
+    <!-- Квадрат -->
+    <div class="decor-shape square-rotated" data-speed="0.45">
+        <svg viewBox="0 0 100 100">
+            <rect x="15" y="15" width="70" height="70" rx="8"/>
+        </svg>
+    </div>
+</div>
     <div class="page-wrapper">
         <div class="top-bar">
             <a href="user_main.html" class="back-btn">
