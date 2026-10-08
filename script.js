@@ -1,205 +1,92 @@
-// === Частицы на фоне (жёлтые) ===
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let particles = [];
-let mouse = { x: null, y: null };
+/* ============================================
+   PREMIUM GPU PLATFORM — SCRIPTS
+   ============================================ */
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
+document.addEventListener('DOMContentLoaded', () => {
 
-class Particle {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.4;
-        this.speedY = (Math.random() - 0.5) * 0.4;
-        this.opacity = Math.random() * 0.6 + 0.3;
-    }
-
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-
-        // Реакция на мышь
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 100) {
-            const force = (100 - dist) / 100;
-            this.x -= dx * force * 0.02;
-            this.y -= dy * force * 0.02;
-        }
-    }
-
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(250, 204, 21, ${this.opacity})`;
-        ctx.fill();
-    }
-}
-
-function initParticles() {
-    particles = [];
-    const count = Math.min(80, Math.floor(window.innerWidth / 20));
-    for (let i = 0; i < count; i++) {
-        particles.push(new Particle());
-    }
-}
-
-function connectParticles() {
-    for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-
-            if (dist < 120) {
-                ctx.beginPath();
-                ctx.strokeStyle = `rgba(250, 204, 21, ${0.15 * (1 - dist / 120)})`;
-                ctx.lineWidth = 1;
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
+    /* --- Плавное появление карточек при скролле --- */
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
             }
-        }
-    }
-}
+        });
+    }, { threshold: 0.1 });
 
-function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-        p.update();
-        p.draw();
+    document.querySelectorAll('.group-card, .table-row, .student-chip').forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = `opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${i * 0.05}s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${i * 0.05}s`;
+        observer.observe(el);
     });
-    connectParticles();
-    requestAnimationFrame(animateParticles);
-}
 
-resizeCanvas();
-initParticles();
-animateParticles();
-
-window.addEventListener('resize', () => {
-    resizeCanvas();
-    initParticles();
-});
-
-window.addEventListener('mousemove', (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-});
-
-// === Header scroll ===
-const header = document.querySelector('.header');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-});
-
-// === Mobile menu ===
-const navToggle = document.querySelector('.nav-toggle');
-const navMenu = document.querySelector('.nav-menu');
-
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-});
-
-document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-    });
-});
-
-// === Smooth scroll ===
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
+    /* --- Кнопка использования GPU --- */
+    const useGpuBtn = document.getElementById('useGpuBtn');
+    if (useGpuBtn) {
+        useGpuBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    });
-});
+            const originalText = useGpuBtn.innerHTML;
+            useGpuBtn.innerHTML = `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;">
+                    <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                </svg>
+                Подключение...
+            `;
 
-// === Анимация появления элементов ===
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
+            const style = document.createElement('style');
+            style.innerHTML = '@keyframes spin { to { transform: rotate(360deg); } }';
+            document.head.appendChild(style);
+
             setTimeout(() => {
-                entry.target.classList.add('visible');
-            }, index * 80);
-            observer.unobserve(entry.target);
-        }
+                useGpuBtn.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Сессия активна
+                `;
+                setTimeout(() => { useGpuBtn.innerHTML = originalText; }, 2000);
+            }, 1500);
+        });
+    }
+
+    /* --- Обработка форм --- */
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = form.querySelector('button[type="submit"]');
+            if (!btn) return;
+
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;">
+                    <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                </svg>
+                Сохранение...
+            `;
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Готово
+                `;
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                }, 1500);
+            }, 1200);
+        });
     });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-document.querySelectorAll('.feature-card, .service-card, .contact-item, .section-head').forEach(el => {
-    el.classList.add('reveal');
-    observer.observe(el);
-});
-
-// === Счётчики ===
-function animateCounter(el) {
-    const target = parseInt(el.dataset.count);
-    const duration = 2000;
-    const step = target / (duration / 16);
-    let current = 0;
-
-    const update = () => {
-        current += step;
-        if (current < target) {
-            el.textContent = Math.floor(current);
-            requestAnimationFrame(update);
-        } else {
-            el.textContent = target;
-        }
-    };
-    update();
-}
-
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            document.querySelectorAll('.stat-num').forEach(animateCounter);
-            statsObserver.disconnect();
-        }
+    /* --- Параллакс для светящихся сфер --- */
+    document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 20;
+        const y = (e.clientY / window.innerHeight - 0.5) * 20;
+        document.body.style.backgroundPosition = `${x}px ${y}px`;
     });
-}, { threshold: 0.5 });
 
-const heroStats = document.querySelector('.hero-stats');
-if (heroStats) statsObserver.observe(heroStats);
-
-// === Форма ===
-const contactForm = document.getElementById('contactForm');
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const btn = contactForm.querySelector('button[type="submit"]');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '✓ Отправлено!';
-    btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
-
-    setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.style.background = '';
-        contactForm.reset();
-    }, 2500);
-});
-
-// === Параллакс для блобов ===
-window.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 30;
-    const y = (e.clientY / window.innerHeight - 0.5) * 30;
-
-    document.querySelector('.blob-1').style.transform = `translate(${x}px, ${y}px)`;
-    document.querySelector('.blob-2').style.transform = `translate(${-x}px, ${-y}px)`;
 });
