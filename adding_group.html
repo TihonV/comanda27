@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание группы</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .form-container {
+            max-width: 620px;
+            margin: 0 auto;
+            padding: 48px;
+        }
+
+        .form-header {
+            margin-bottom: 36px;
+        }
+
+        .form-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .form-header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 16px;
+            padding: 18px;
+            font-size: 1.05rem;
+        }
+
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
+            .form-container { padding: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <div class="top-bar">
+            <a href="user_main.html" class="back-btn">←</a>
+            <h1 class="page-title">Создание группы</h1>
+        </div>
+
+        <div class="form-container glass-panel">
+            <div class="form-header">
+                <h2>Новая группа</h2>
+                <p>Заполните параметры для создания новой учебной группы</p>
+            </div>
+
+            <form>
+                <div class="form-group">
+                    <label class="form-label">Название группы</label>
+                    <input type="text" class="form-input" placeholder="Например: Machine Learning Basics">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Количество GPU на группу</label>
+                        <input type="number" class="form-input" placeholder="4">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Доля GPU на студента (%)</label>
+                        <input type="number" class="form-input" placeholder="25">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Ограничение на использование (в часах)</label>
+                    <input type="number" class="form-input" placeholder="10">
+                </div>
+
+                <button type="submit" class="btn btn-primary submit-btn">Создать группу</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
