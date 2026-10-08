@@ -1,205 +1,462 @@
-// === Частицы на фоне ===
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let particles = [];
-let mouse = { x: null, y: null };
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium — Digital Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body>
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
+    <!-- Анимированный фон с частицами -->
+    <canvas id="particles"></canvas>
 
-class Particle {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.4;
-        this.speedY = (Math.random() - 0.5) * 0.4;
-        this.opacity = Math.random() * 0.5 + 0.2;
-    }
+    <!-- Декоративные SVG-блабы -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
 
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="#home" class="nav-brand">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#a78bfa"/>
+                            <stop offset="100%" stop-color="#ec4899"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" stroke="url(#logoGrad)" stroke-width="1.5" fill="none"/>
+                    <path d="M16 8L22 11.5V18.5L16 22L10 18.5V11.5L16 8Z" fill="url(#logoGrad)"/>
+                </svg>
+                <span>PREMIUM</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Меню">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
 
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    Digital Studio 2024
+                </div>
+                <h1 class="hero-title">
+                    Создаем <span class="gradient-text">премиальные</span> решения
+                </h1>
+                <p class="hero-subtitle">
+                    Мы превращаем ваши идеи в элегантные цифровые продукты,
+                    которые выделяются на фоне остальных.
+                </p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-primary">
+                        Начать проект
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="#services" class="btn btn-ghost">
+                        Наши услуги
+                    </a>
+                </div>
 
-        // Реакция на мышь
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 100) {
-            const force = (100 - dist) / 100;
-            this.x -= dx * force * 0.02;
-            this.y -= dy * force * 0.02;
-        }
-    }
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-num" data-count="150">0</div>
+                        <div class="stat-label">Проектов</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-num" data-count="98">0</div>
+                        <div class="stat-label">% Довольных</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-num" data-count="12">0</div>
+                        <div class="stat-label">Лет опыта</div>
+                    </div>
+                </div>
+            </div>
 
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(167, 139, 250, ${this.opacity})`;
-        ctx.fill();
-    }
-}
+            <!-- Сложный SVG-иллюстрация -->
+            <div class="hero-visual">
+                <svg class="hero-svg" viewBox="0 0 500 500" fill="none">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#a78bfa"/>
+                            <stop offset="100%" stop-color="#ec4899"/>
+                        </linearGradient>
+                        <linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#60a5fa"/>
+                            <stop offset="100%" stop-color="#a78bfa"/>
+                        </linearGradient>
+                        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.6"/>
+                            <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
+                        </radialGradient>
+                        <filter id="blur1">
+                            <feGaussianBlur stdDeviation="8"/>
+                        </filter>
+                    </defs>
 
-function initParticles() {
-    particles = [];
-    const count = Math.min(80, Math.floor(window.innerWidth / 20));
-    for (let i = 0; i < count; i++) {
-        particles.push(new Particle());
-    }
-}
+                    <!-- Свечение -->
+                    <circle cx="250" cy="250" r="180" fill="url(#glow)"/>
 
-function connectParticles() {
-    for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
+                    <!-- Вращающиеся орбиты -->
+                    <g class="orbit orbit-1">
+                        <ellipse cx="250" cy="250" rx="200" ry="80" stroke="url(#grad1)" stroke-width="1" stroke-dasharray="4 8" fill="none" opacity="0.5"/>
+                        <circle cx="450" cy="250" r="6" fill="#ec4899"/>
+                    </g>
+                    <g class="orbit orbit-2">
+                        <ellipse cx="250" cy="250" rx="160" ry="200" stroke="url(#grad2)" stroke-width="1" stroke-dasharray="4 8" fill="none" opacity="0.5" transform="rotate(45 250 250)"/>
+                        <circle cx="250" cy="50" r="5" fill="#60a5fa"/>
+                    </g>
+                    <g class="orbit orbit-3">
+                        <ellipse cx="250" cy="250" rx="120" ry="160" stroke="#a78bfa" stroke-width="1" stroke-dasharray="4 8" fill="none" opacity="0.4" transform="rotate(-45 250 250)"/>
+                        <circle cx="130" cy="140" r="4" fill="#a78bfa"/>
+                    </g>
 
-            if (dist < 120) {
-                ctx.beginPath();
-                ctx.strokeStyle = `rgba(167, 139, 250, ${0.15 * (1 - dist / 120)})`;
-                ctx.lineWidth = 1;
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
-            }
-        }
-    }
-}
+                    <!-- Центральный шестиугольник -->
+                    <g class="center-shape">
+                        <path d="M250 120 L370 190 V330 L250 400 L130 330 V190 Z"
+                              fill="url(#grad1)" opacity="0.15"
+                              stroke="url(#grad1)" stroke-width="2"/>
+                        <path d="M250 160 L340 212 V316 L250 368 L160 316 V212 Z"
+                              fill="url(#grad2)" opacity="0.25"/>
+                        <path d="M250 200 L310 235 V305 L250 340 L190 305 V235 Z"
+                              fill="url(#grad1)"/>
+                    </g>
 
-function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-    });
-    connectParticles();
-    requestAnimationFrame(animateParticles);
-}
+                    <!-- Плавающие точки -->
+                    <circle cx="80" cy="120" r="3" fill="#a78bfa" class="float-dot"/>
+                    <circle cx="430" cy="380" r="4" fill="#ec4899" class="float-dot"/>
+                    <circle cx="400" cy="100" r="2" fill="#60a5fa" class="float-dot"/>
+                    <circle cx="100" cy="400" r="3" fill="#ec4899" class="float-dot"/>
+                </svg>
+            </div>
+        </div>
 
-resizeCanvas();
-initParticles();
-animateParticles();
+        <!-- Волна внизу -->
+        <svg class="hero-wave" viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,64 C240,120 480,0 720,64 C960,128 1200,20 1440,64 L1440,120 L0,120 Z"
+                  fill="rgba(10,10,20,0.95)"/>
+        </svg>
+    </section>
 
-window.addEventListener('resize', () => {
-    resizeCanvas();
-    initParticles();
-});
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-tag">О нас</span>
+                <h2 class="section-title">Мы создаем <span class="gradient-text">будущее</span> цифрового дизайна</h2>
+                <p class="section-sub">Команда профессионалов с многолетним опытом работы над проектами любого масштаба</p>
+            </div>
 
-window.addEventListener('mousemove', (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-});
+            <div class="about-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-svg">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <defs>
+                                <linearGradient id="fi1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#a78bfa"/>
+                                    <stop offset="100%" stop-color="#ec4899"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M24 4L42 14V34L24 44L6 34V14L24 4Z" stroke="url(#fi1)" stroke-width="2" fill="none"/>
+                            <path d="M24 14L32 19V29L24 34L16 29V19L24 14Z" fill="url(#fi1)"/>
+                        </svg>
+                    </div>
+                    <h3>Качество</h3>
+                    <p>Бескомпромиссные стандарты и внимание к каждой детали проекта</p>
+                </div>
 
-// === Header scroll ===
-const header = document.querySelector('.header');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-});
+                <div class="feature-card">
+                    <div class="feature-icon-svg">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <defs>
+                                <linearGradient id="fi2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#60a5fa"/>
+                                    <stop offset="100%" stop-color="#a78bfa"/>
+                                </linearGradient>
+                            </defs>
+                            <circle cx="24" cy="24" r="18" stroke="url(#fi2)" stroke-width="2" fill="none"/>
+                            <circle cx="24" cy="24" r="10" stroke="url(#fi2)" stroke-width="2" fill="none"/>
+                            <circle cx="24" cy="24" r="4" fill="url(#fi2)"/>
+                            <path d="M24 6V10 M24 38V42 M6 24H10 M38 24H42" stroke="url(#fi2)" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Инновации</h3>
+                    <p>Используем передовые технологии для создания уникальных решений</p>
+                </div>
 
-// === Mobile menu ===
-const navToggle = document.querySelector('.nav-toggle');
-const navMenu = document.querySelector('.nav-menu');
+                <div class="feature-card">
+                    <div class="feature-icon-svg">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <defs>
+                                <linearGradient id="fi3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#ec4899"/>
+                                    <stop offset="100%" stop-color="#f59e0b"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M24 4L30 16L44 18L34 28L36 42L24 36L12 42L14 28L4 18L18 16L24 4Z"
+                                  fill="url(#fi3)" opacity="0.9"/>
+                        </svg>
+                    </div>
+                    <h3>Премиум</h3>
+                    <p>Эксклюзивный подход к каждому клиенту и его бизнесу</p>
+                </div>
 
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-});
+                <div class="feature-card">
+                    <div class="feature-icon-svg">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <defs>
+                                <linearGradient id="fi4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#10b981"/>
+                                    <stop offset="100%" stop-color="#60a5fa"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M8 24L18 34L40 12" stroke="url(#fi4)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <circle cx="24" cy="24" r="20" stroke="url(#fi4)" stroke-width="1.5" fill="none" opacity="0.4"/>
+                        </svg>
+                    </div>
+                    <h3>Результат</h3>
+                    <p>Гарантируем измеримый рост показателей вашего бизнеса</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-    });
-});
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-tag">Услуги</span>
+                <h2 class="section-title">Что мы <span class="gradient-text">предлагаем</span></h2>
+            </div>
 
-// === Smooth scroll ===
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    });
-});
+            <div class="services-grid">
+                <article class="service-card">
+                    <div class="service-glow"></div>
+                    <div class="service-number">01</div>
+                    <div class="service-icon-svg">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <defs>
+                                <linearGradient id="si1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#a78bfa"/>
+                                    <stop offset="100%" stop-color="#ec4899"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M32 6C40 6 46 12 46 20C46 26 42 30 38 34L34 40H30L26 34C22 30 18 26 18 20C18 12 24 6 32 6Z"
+                                  stroke="url(#si1)" stroke-width="2" fill="none"/>
+                            <circle cx="32" cy="20" r="6" fill="url(#si1)"/>
+                            <path d="M24 44H40 M26 50H38 M28 56H36" stroke="url(#si1)" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>UI/UX Дизайн</h3>
+                    <p>Разрабатываем интуитивные интерфейсы, которые влюбляют пользователей в ваш продукт</p>
+                    <div class="service-tags">
+                        <span>Figma</span><span>Prototyping</span><span>Design System</span>
+                    </div>
+                    <a href="#" class="service-link">
+                        Подробнее
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </article>
 
-// === Анимация появления элементов ===
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-            setTimeout(() => {
-                entry.target.classList.add('visible');
-            }, index * 80);
-            observer.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+                <article class="service-card featured">
+                    <div class="service-glow"></div>
+                    <div class="service-number">02</div>
+                    <div class="service-icon-svg">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <defs>
+                                <linearGradient id="si2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#60a5fa"/>
+                                    <stop offset="100%" stop-color="#a78bfa"/>
+                                </linearGradient>
+                            </defs>
+                            <rect x="10" y="14" width="44" height="32" rx="4" stroke="url(#si2)" stroke-width="2" fill="none"/>
+                            <path d="M20 24L26 30L20 36 M32 36H44" stroke="url(#si2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M22 46V50 M42 46V50 M16 50H48" stroke="url(#si2)" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Веб-разработка</h3>
+                    <p>Создаем быстрые и надежные сайты на современном стеке технологий</p>
+                    <div class="service-tags">
+                        <span>React</span><span>Next.js</span><span>Node.js</span>
+                    </div>
+                    <a href="#" class="service-link">
+                        Подробнее
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </article>
 
-document.querySelectorAll('.feature-card, .service-card, .contact-item, .section-head').forEach(el => {
-    el.classList.add('reveal');
-    observer.observe(el);
-});
+                <article class="service-card">
+                    <div class="service-glow"></div>
+                    <div class="service-number">03</div>
+                    <div class="service-icon-svg">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <defs>
+                                <linearGradient id="si3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#10b981"/>
+                                    <stop offset="100%" stop-color="#60a5fa"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M8 52L20 34L32 42L44 20L56 28" stroke="url(#si3)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <circle cx="20" cy="34" r="3" fill="url(#si3)"/>
+                            <circle cx="32" cy="42" r="3" fill="url(#si3)"/>
+                            <circle cx="44" cy="20" r="3" fill="url(#si3)"/>
+                            <path d="M8 8V56H56" stroke="url(#si3)" stroke-width="1.5" opacity="0.4"/>
+                        </svg>
+                    </div>
+                    <h3>Маркетинг</h3>
+                    <p>Продвигаем ваш бренд и увеличиваем конверсию с помощью data-driven стратегий</p>
+                    <div class="service-tags">
+                        <span>SEO</span><span>PPC</span><span>Analytics</span>
+                    </div>
+                    <a href="#" class="service-link">
+                        Подробнее
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
 
-// === Счётчики ===
-function animateCounter(el) {
-    const target = parseInt(el.dataset.count);
-    const duration = 2000;
-    const step = target / (duration / 16);
-    let current = 0;
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <span class="section-tag">Контакты</span>
+                    <h2 class="section-title">Давайте <span class="gradient-text">работать</span> вместе</h2>
+                    <p>Расскажите о вашей идее — мы свяжемся с вами в течение 24 часов.</p>
 
-    const update = () => {
-        current += step;
-        if (current < target) {
-            el.textContent = Math.floor(current);
-            requestAnimationFrame(update);
-        } else {
-            el.textContent = target;
-        }
-    };
-    update();
-}
+                    <div class="contact-items">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M4 4H20V20H4V4Z M4 6L12 13L20 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="contact-label">Email</div>
+                                <div class="contact-value">hello@premium.studio</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M22 16.92V19a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h2.09a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="contact-label">Телефон</div>
+                                <div class="contact-value">+7 (999) 123-45-67</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10A9 9 0 0112 1A9 9 0 0121 10Z" stroke="currentColor" stroke-width="1.8"/>
+                                    <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.8"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="contact-label">Адрес</div>
+                                <div class="contact-value">Москва, ул. Пушкина, 1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            document.querySelectorAll('.stat-num').forEach(animateCounter);
-            statsObserver.disconnect();
-        }
-    });
-}, { threshold: 0.5 });
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Имя</label>
+                            <input type="text" placeholder="Иван Иванов" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" placeholder="ivan@example.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Тема</label>
+                        <input type="text" placeholder="Обсуждение проекта">
+                    </div>
+                    <div class="form-group">
+                        <label>Сообщение</label>
+                        <textarea placeholder="Расскажите о вашем проекте..." rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        Отправить сообщение
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <path d="M22 2L11 13 M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
 
-const heroStats = document.querySelector('.hero-stats');
-if (heroStats) statsObserver.observe(heroStats);
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <defs>
+                        <linearGradient id="logoGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#a78bfa"/>
+                            <stop offset="100%" stop-color="#ec4899"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" stroke="url(#logoGrad2)" stroke-width="1.5" fill="none"/>
+                    <path d="M16 8L22 11.5V18.5L16 22L10 18.5V11.5L16 8Z" fill="url(#logoGrad2)"/>
+                </svg>
+                <span>PREMIUM</span>
+                <p>Создаем будущее цифрового дизайна с 2012 года.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Компания</h4>
+                <a href="#about">О нас</a>
+                <a href="#services">Услуги</a>
+                <a href="#contact">Контакты</a>
+            </div>
+            <div class="footer-col">
+                <h4>Соцсети</h4>
+                <a href="#">Telegram</a>
+                <a href="#">Instagram</a>
+                <a href="#">LinkedIn</a>
+            </div>
+            <div class="footer-col">
+                <h4>Правовое</h4>
+                <a href="#">Политика</a>
+                <a href="#">Условия</a>
+                <a href="#">Cookies</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2024 Premium Studio. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
 
-// === Форма ===
-const contactForm = document.getElementById('contactForm');
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const btn = contactForm.querySelector('button[type="submit"]');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '✓ Отправлено!';
-    btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-
-    setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.style.background = '';
-        contactForm.reset();
-    }, 2500);
-});
-
-// === Параллакс для блобов ===
-window.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 30;
-    const y = (e.clientY / window.innerHeight - 0.5) * 30;
-
-    document.querySelector('.blob-1').style.transform = `translate(${x}px, ${y}px)`;
-    document.querySelector('.blob-2').style.transform = `translate(${-x}px, ${-y}px)`;
-});
+    <script src="script.js"></script>
+</body>
+</html>
