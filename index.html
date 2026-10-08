@@ -1,121 +1,205 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Премиум Сайт</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav">
-            <div class="nav-brand">
-                <h1>PREMIUM</h1>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#home">Главная</a></li>
-                <li><a href="#about">О нас</a></li>
-                <li><a href="#services">Услуги</a></li>
-                <li><a href="#contact">Контакты</a></li>
-            </ul>
-            <div class="nav-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-    </header>
+// === Частицы на фоне ===
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let mouse = { x: null, y: null };
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h1 class="hero-title">Добро пожаловать</h1>
-            <p class="hero-subtitle">Создаем премиальные решения для вашего бизнеса</p>
-            <button class="cta-button">Узнать больше</button>
-        </div>
-    </section>
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="container">
-            <h2 class="section-title">О нас</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Мы специализируемся на создании инновационных решений с премиальным качеством и вниманием к деталям.</p>
-                </div>
-                <div class="about-features">
-                    <div class="feature">
-                        <div class="feature-icon">✨</div>
-                        <h3>Качество</h3>
-                        <p>Высокие стандарты во всем</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">🚀</div>
-                        <h3>Инновации</h3>
-                        <p>Современные технологии</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">💎</div>
-                        <h3>Премиум</h3>
-                        <p>Эксклюзивный подход</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.speedY = (Math.random() - 0.5) * 0.4;
+        this.opacity = Math.random() * 0.5 + 0.2;
+    }
 
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <h2 class="section-title">Наши услуги</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">🎨</div>
-                    <h3>Дизайн</h3>
-                    <p>Создаем уникальный дизайн, который отражает вашу индивидуальность</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">💻</div>
-                    <h3>Разработка</h3>
-                    <p>Разрабатываем современные веб-приложения и сайты</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">📈</div>
-                    <h3>Маркетинг</h3>
-                    <p>Продвигаем ваш бизнес в цифровом пространстве</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2 class="section-title">Свяжитесь с нами</h2>
-            <form class="contact-form">
-                <div class="form-group">
-                    <input type="text" placeholder="Ваше имя" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" placeholder="Email" required>
-                </div>
-                <div class="form-group">
-                    <textarea placeholder="Ваше сообщение" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Отправить</button>
-            </form>
-        </div>
-    </section>
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Premium. Все права защищены.</p>
-        </div>
-    </footer>
+        // Реакция на мышь
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+            const force = (100 - dist) / 100;
+            this.x -= dx * force * 0.02;
+            this.y -= dy * force * 0.02;
+        }
+    }
 
-    <script src="script.js"></script>
-</body>
-</html>
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(167, 139, 250, ${this.opacity})`;
+        ctx.fill();
+    }
+}
+
+function initParticles() {
+    particles = [];
+    const count = Math.min(80, Math.floor(window.innerWidth / 20));
+    for (let i = 0; i < count; i++) {
+        particles.push(new Particle());
+    }
+}
+
+function connectParticles() {
+    for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 120) {
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(167, 139, 250, ${0.15 * (1 - dist / 120)})`;
+                ctx.lineWidth = 1;
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+        p.update();
+        p.draw();
+    });
+    connectParticles();
+    requestAnimationFrame(animateParticles);
+}
+
+resizeCanvas();
+initParticles();
+animateParticles();
+
+window.addEventListener('resize', () => {
+    resizeCanvas();
+    initParticles();
+});
+
+window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+});
+
+// === Header scroll ===
+const header = document.querySelector('.header');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+});
+
+// === Mobile menu ===
+const navToggle = document.querySelector('.nav-toggle');
+const navMenu = document.querySelector('.nav-menu');
+
+navToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+});
+
+document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+    });
+});
+
+// === Smooth scroll ===
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+// === Анимация появления элементов ===
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.classList.add('visible');
+            }, index * 80);
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.feature-card, .service-card, .contact-item, .section-head').forEach(el => {
+    el.classList.add('reveal');
+    observer.observe(el);
+});
+
+// === Счётчики ===
+function animateCounter(el) {
+    const target = parseInt(el.dataset.count);
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+
+    const update = () => {
+        current += step;
+        if (current < target) {
+            el.textContent = Math.floor(current);
+            requestAnimationFrame(update);
+        } else {
+            el.textContent = target;
+        }
+    };
+    update();
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            document.querySelectorAll('.stat-num').forEach(animateCounter);
+            statsObserver.disconnect();
+        }
+    });
+}, { threshold: 0.5 });
+
+const heroStats = document.querySelector('.hero-stats');
+if (heroStats) statsObserver.observe(heroStats);
+
+// === Форма ===
+const contactForm = document.getElementById('contactForm');
+contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = contactForm.querySelector('button[type="submit"]');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '✓ Отправлено!';
+    btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+
+    setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.background = '';
+        contactForm.reset();
+    }, 2500);
+});
+
+// === Параллакс для блобов ===
+window.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 30;
+    const y = (e.clientY / window.innerHeight - 0.5) * 30;
+
+    document.querySelector('.blob-1').style.transform = `translate(${x}px, ${y}px)`;
+    document.querySelector('.blob-2').style.transform = `translate(${-x}px, ${-y}px)`;
+});
