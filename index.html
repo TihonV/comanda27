@@ -18,133 +18,178 @@
 
         .brand {
             text-align: center;
-            margin-bottom: 70px;
+            margin-bottom: 72px;
         }
 
         .brand-logo {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 20px;
-            border-radius: 18px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 24px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, var(--accent-bright), var(--accent-deep));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            font-weight: 800;
-            box-shadow: 0 8px 30px var(--accent-glow);
+            box-shadow: 
+                0 12px 40px var(--accent-glow),
+                inset 0 2px 0 rgba(255,255,255,0.3),
+                0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
         }
 
+        .brand-logo::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 26px;
+            background: linear-gradient(135deg, var(--accent-bright), transparent 60%);
+            filter: blur(20px);
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .brand-logo svg { width: 38px; height: 38px; color: #05130a; }
+
         .brand h1 {
-            font-size: 2.5rem;
+            font-size: 2.75rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            background: linear-gradient(180deg, #ffffff 0%, #94a3a0 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
         }
 
         .brand p {
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 1.05rem;
+            font-weight: 400;
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
 
         .roles {
-            display: flex;
-            gap: 32px;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 700px;
+            width: 100%;
         }
 
         .role-card {
-            width: 300px;
-            height: 360px;
+            padding: 44px 32px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 40px;
+            text-align: center;
             cursor: pointer;
+            transition: all 0.5s var(--ease);
             position: relative;
-            overflow: hidden;
-            transition: var(--transition);
         }
 
         .role-card::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at 50% 30%, var(--accent-glow), transparent 65%);
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent, rgba(46, 204, 113, 0.5), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s var(--ease);
         }
 
         .role-card:hover {
             transform: translateY(-8px);
-            border-color: var(--card-hover-border);
-            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6);
+            border-color: rgba(46, 204, 113, 0.3);
+            box-shadow: 
+                0 30px 60px rgba(0,0,0,0.6),
+                0 0 40px rgba(46, 204, 113, 0.1);
         }
 
         .role-card:hover::before { opacity: 1; }
 
         .role-icon {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: #fff;
+            width: 100px;
+            height: 100px;
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 70px;
-            margin-bottom: 28px;
-            border: 3px solid rgba(255, 255, 255, 0.08);
-            transition: var(--transition);
+            margin-bottom: 24px;
             position: relative;
-            z-index: 1;
-            overflow: hidden;
+            transition: all 0.5s var(--ease-bounce);
         }
 
-        .role-icon svg { width: 80px; height: 80px; }
+        .role-icon svg { width: 48px; height: 48px; }
+
+        .role-icon-student {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            color: #0c4a6e;
+            box-shadow: 0 8px 30px rgba(186, 230, 253, 0.2);
+        }
+
+        .role-icon-admin {
+            background: linear-gradient(135deg, rgba(46,204,113,0.15), rgba(22,163,74,0.05));
+            border: 1px solid rgba(46,204,113,0.3);
+            color: var(--accent-bright);
+            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.15);
+        }
 
         .role-card:hover .role-icon {
-            transform: scale(1.06);
-            border-color: var(--accent);
-            box-shadow: 0 0 40px var(--accent-glow);
+            transform: scale(1.1) rotate(-3deg);
         }
 
         .role-title {
             font-size: 1.15rem;
-            font-weight: 600;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            line-height: 1.4;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
         }
 
         .role-sub {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            margin-top: 8px;
-            position: relative;
-            z-index: 1;
+        }
+
+        .footer-note {
+            margin-top: 60px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 640px) {
+            .roles { grid-template-columns: 1fr; }
+            .brand h1 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
     <div class="landing">
-        <div class="brand">
-            <div class="brand-logo">G</div>
+        <div class="brand fade-in">
+            <div class="brand-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                    <rect x="9" y="9" width="6" height="6"/>
+                    <path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/>
+                </svg>
+            </div>
             <h1>GPU Learning Platform</h1>
-            <p>Платформа для обучения и распределения GPU-ресурсов</p>
+            <p>Премиальная платформа для распределения GPU-ресурсов в образовательных целях</p>
         </div>
 
         <div class="roles">
-            <!-- Ученик / Преподаватель -->
-            <a href="user_main.html" class="role-card glass-panel">
-                <div class="role-icon" style="background:#e8f4ff;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <a href="user_main.html" class="role-card glass-panel fade-in-1">
+                <div class="role-icon role-icon-student">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                         <circle cx="12" cy="7" r="4"/>
                     </svg>
@@ -153,19 +198,21 @@
                 <div class="role-sub">Доступ к обучению и группам</div>
             </a>
 
-            <!-- Администратор -->
-            <a href="admin_panel.html" class="role-card glass-panel">
-                <div class="role-icon" style="background:#1a1f1d;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/>
-                        <circle cx="12" cy="11" r="2.5"/>
+            <a href="admin_panel.html" class="role-card glass-panel fade-in-2">
+                <div class="role-icon role-icon-admin">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <circle cx="12" cy="11" r="2"/>
                     </svg>
                 </div>
                 <div class="role-title">Администратор</div>
                 <div class="role-sub">Управление системой</div>
             </a>
         </div>
+
+        <div class="footer-note fade-in-3">Powered by GPU Cluster v2.4</div>
     </div>
 
+    <script src="script.js"></script>
 </body>
 </html>
