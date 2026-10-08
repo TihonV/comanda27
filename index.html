@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium — Digital Studio</title>
+    <title>PREMIUM — Digital Studio</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Анимированный фон с частицами -->
+    <!-- Анимированный canvas с частицами -->
     <canvas id="particles"></canvas>
 
-    <!-- Декоративные SVG-блабы -->
+    <!-- Декоративные световые блобы -->
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
 
@@ -20,11 +20,11 @@
     <header class="header">
         <nav class="nav container">
             <a href="#home" class="nav-brand">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <svg width="34" height="34" viewBox="0 0 32 32" fill="none">
                     <defs>
                         <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#a78bfa"/>
-                            <stop offset="100%" stop-color="#ec4899"/>
+                            <stop offset="0%" stop-color="#facc15"/>
+                            <stop offset="100%" stop-color="#f59e0b"/>
                         </linearGradient>
                     </defs>
                     <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" stroke="url(#logoGrad)" stroke-width="1.5" fill="none"/>
@@ -87,48 +87,45 @@
                 </div>
             </div>
 
-            <!-- Сложный SVG-иллюстрация -->
+            <!-- Сложный SVG с орбитами -->
             <div class="hero-visual">
                 <svg class="hero-svg" viewBox="0 0 500 500" fill="none">
                     <defs>
                         <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#a78bfa"/>
-                            <stop offset="100%" stop-color="#ec4899"/>
+                            <stop offset="0%" stop-color="#facc15"/>
+                            <stop offset="100%" stop-color="#f59e0b"/>
                         </linearGradient>
                         <linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#60a5fa"/>
-                            <stop offset="100%" stop-color="#a78bfa"/>
+                            <stop offset="0%" stop-color="#eab308"/>
+                            <stop offset="100%" stop-color="#fbbf24"/>
                         </linearGradient>
                         <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.6"/>
-                            <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
+                            <stop offset="0%" stop-color="#facc15" stop-opacity="0.5"/>
+                            <stop offset="100%" stop-color="#facc15" stop-opacity="0"/>
                         </radialGradient>
-                        <filter id="blur1">
-                            <feGaussianBlur stdDeviation="8"/>
-                        </filter>
                     </defs>
 
                     <!-- Свечение -->
-                    <circle cx="250" cy="250" r="180" fill="url(#glow)"/>
+                    <circle cx="250" cy="250" r="200" fill="url(#glow)"/>
 
                     <!-- Вращающиеся орбиты -->
                     <g class="orbit orbit-1">
-                        <ellipse cx="250" cy="250" rx="200" ry="80" stroke="url(#grad1)" stroke-width="1" stroke-dasharray="4 8" fill="none" opacity="0.5"/>
-                        <circle cx="450" cy="250" r="6" fill="#ec4899"/>
+                        <ellipse cx="250" cy="250" rx="200" ry="80" stroke="url(#grad1)" stroke-width="1" stroke-dasharray="4 8" fill="none" opacity="0.6"/>
+                        <circle cx="450" cy="250" r="6" fill="#facc15"/>
                     </g>
                     <g class="orbit orbit-2">
-                        <ellipse cx="250" cy="250" rx="160" ry="200" stroke="url(#grad2)" stroke-width="1" stroke-dasharray="4 8" fill="none" opacity="0.5" transform="rotate(45 250 250)"/>
-                        <circle cx="250" cy="50" r="5" fill="#60a5fa"/>
+                        <ellipse cx="250" cy="250" rx="160" ry="200" stroke="url(#grad2)" stroke-width="1" stroke-dasharray="4 8" fill="none" opacity="0.6" transform="rotate(45 250 250)"/>
+                        <circle cx="250" cy="50" r="5" fill="#f59e0b"/>
                     </g>
                     <g class="orbit orbit-3">
-                        <ellipse cx="250" cy="250" rx="120" ry="160" stroke="#a78bfa" stroke-width="1" stroke-dasharray="4 8" fill="none" opacity="0.4" transform="rotate(-45 250 250)"/>
-                        <circle cx="130" cy="140" r="4" fill="#a78bfa"/>
+                        <ellipse cx="250" cy="250" rx="120" ry="160" stroke="#eab308" stroke-width="1" stroke-dasharray="4 8" fill="none" opacity="0.5" transform="rotate(-45 250 250)"/>
+                        <circle cx="130" cy="140" r="4" fill="#fbbf24"/>
                     </g>
 
                     <!-- Центральный шестиугольник -->
                     <g class="center-shape">
                         <path d="M250 120 L370 190 V330 L250 400 L130 330 V190 Z"
-                              fill="url(#grad1)" opacity="0.15"
+                              fill="url(#grad1)" opacity="0.12"
                               stroke="url(#grad1)" stroke-width="2"/>
                         <path d="M250 160 L340 212 V316 L250 368 L160 316 V212 Z"
                               fill="url(#grad2)" opacity="0.25"/>
@@ -137,10 +134,10 @@
                     </g>
 
                     <!-- Плавающие точки -->
-                    <circle cx="80" cy="120" r="3" fill="#a78bfa" class="float-dot"/>
-                    <circle cx="430" cy="380" r="4" fill="#ec4899" class="float-dot"/>
-                    <circle cx="400" cy="100" r="2" fill="#60a5fa" class="float-dot"/>
-                    <circle cx="100" cy="400" r="3" fill="#ec4899" class="float-dot"/>
+                    <circle cx="80" cy="120" r="3" fill="#facc15" class="float-dot"/>
+                    <circle cx="430" cy="380" r="4" fill="#f59e0b" class="float-dot"/>
+                    <circle cx="400" cy="100" r="2" fill="#fbbf24" class="float-dot"/>
+                    <circle cx="100" cy="400" r="3" fill="#eab308" class="float-dot"/>
                 </svg>
             </div>
         </div>
@@ -148,7 +145,7 @@
         <!-- Волна внизу -->
         <svg class="hero-wave" viewBox="0 0 1440 120" preserveAspectRatio="none">
             <path d="M0,64 C240,120 480,0 720,64 C960,128 1200,20 1440,64 L1440,120 L0,120 Z"
-                  fill="rgba(10,10,20,0.95)"/>
+                  fill="rgba(0,0,0,0.95)"/>
         </svg>
     </section>
 
@@ -167,8 +164,8 @@
                         <svg viewBox="0 0 48 48" fill="none">
                             <defs>
                                 <linearGradient id="fi1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#a78bfa"/>
-                                    <stop offset="100%" stop-color="#ec4899"/>
+                                    <stop offset="0%" stop-color="#facc15"/>
+                                    <stop offset="100%" stop-color="#f59e0b"/>
                                 </linearGradient>
                             </defs>
                             <path d="M24 4L42 14V34L24 44L6 34V14L24 4Z" stroke="url(#fi1)" stroke-width="2" fill="none"/>
@@ -184,8 +181,8 @@
                         <svg viewBox="0 0 48 48" fill="none">
                             <defs>
                                 <linearGradient id="fi2" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#60a5fa"/>
-                                    <stop offset="100%" stop-color="#a78bfa"/>
+                                    <stop offset="0%" stop-color="#fbbf24"/>
+                                    <stop offset="100%" stop-color="#eab308"/>
                                 </linearGradient>
                             </defs>
                             <circle cx="24" cy="24" r="18" stroke="url(#fi2)" stroke-width="2" fill="none"/>
@@ -203,12 +200,12 @@
                         <svg viewBox="0 0 48 48" fill="none">
                             <defs>
                                 <linearGradient id="fi3" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#ec4899"/>
-                                    <stop offset="100%" stop-color="#f59e0b"/>
+                                    <stop offset="0%" stop-color="#facc15"/>
+                                    <stop offset="100%" stop-color="#ca8a04"/>
                                 </linearGradient>
                             </defs>
                             <path d="M24 4L30 16L44 18L34 28L36 42L24 36L12 42L14 28L4 18L18 16L24 4Z"
-                                  fill="url(#fi3)" opacity="0.9"/>
+                                  fill="url(#fi3)" opacity="0.95"/>
                         </svg>
                     </div>
                     <h3>Премиум</h3>
@@ -220,8 +217,8 @@
                         <svg viewBox="0 0 48 48" fill="none">
                             <defs>
                                 <linearGradient id="fi4" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#10b981"/>
-                                    <stop offset="100%" stop-color="#60a5fa"/>
+                                    <stop offset="0%" stop-color="#f59e0b"/>
+                                    <stop offset="100%" stop-color="#facc15"/>
                                 </linearGradient>
                             </defs>
                             <path d="M8 24L18 34L40 12" stroke="url(#fi4)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -251,8 +248,8 @@
                         <svg viewBox="0 0 64 64" fill="none">
                             <defs>
                                 <linearGradient id="si1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#a78bfa"/>
-                                    <stop offset="100%" stop-color="#ec4899"/>
+                                    <stop offset="0%" stop-color="#facc15"/>
+                                    <stop offset="100%" stop-color="#f59e0b"/>
                                 </linearGradient>
                             </defs>
                             <path d="M32 6C40 6 46 12 46 20C46 26 42 30 38 34L34 40H30L26 34C22 30 18 26 18 20C18 12 24 6 32 6Z"
@@ -281,8 +278,8 @@
                         <svg viewBox="0 0 64 64" fill="none">
                             <defs>
                                 <linearGradient id="si2" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#60a5fa"/>
-                                    <stop offset="100%" stop-color="#a78bfa"/>
+                                    <stop offset="0%" stop-color="#fbbf24"/>
+                                    <stop offset="100%" stop-color="#eab308"/>
                                 </linearGradient>
                             </defs>
                             <rect x="10" y="14" width="44" height="32" rx="4" stroke="url(#si2)" stroke-width="2" fill="none"/>
@@ -310,8 +307,8 @@
                         <svg viewBox="0 0 64 64" fill="none">
                             <defs>
                                 <linearGradient id="si3" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#10b981"/>
-                                    <stop offset="100%" stop-color="#60a5fa"/>
+                                    <stop offset="0%" stop-color="#facc15"/>
+                                    <stop offset="100%" stop-color="#ca8a04"/>
                                 </linearGradient>
                             </defs>
                             <path d="M8 52L20 34L32 42L44 20L56 28" stroke="url(#si3)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -418,11 +415,11 @@
     <footer class="footer">
         <div class="container footer-grid">
             <div class="footer-brand">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <svg width="34" height="34" viewBox="0 0 32 32" fill="none">
                     <defs>
                         <linearGradient id="logoGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#a78bfa"/>
-                            <stop offset="100%" stop-color="#ec4899"/>
+                            <stop offset="0%" stop-color="#facc15"/>
+                            <stop offset="100%" stop-color="#f59e0b"/>
                         </linearGradient>
                     </defs>
                     <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" stroke="url(#logoGrad2)" stroke-width="1.5" fill="none"/>
