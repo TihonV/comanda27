@@ -6,17 +6,18 @@
 }
 
 :root {
-    --bg-dark: #0a0a14;
-    --bg-darker: #05050a;
+    --bg-dark: #0a0a0a;
+    --bg-darker: #000000;
     --text: #ffffff;
-    --text-muted: #a1a1b5;
-    --primary: #a78bfa;
-    --secondary: #ec4899;
-    --accent: #60a5fa;
-    --gradient: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
-    --gradient-2: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-    --glass: rgba(255, 255, 255, 0.04);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --text-muted: #a1a1a1;
+    --primary: #facc15;
+    --secondary: #f59e0b;
+    --accent: #fbbf24;
+    --deep-gold: #ca8a04;
+    --gradient: linear-gradient(135deg, #facc15 0%, #f59e0b 100%);
+    --gradient-2: linear-gradient(135deg, #fbbf24 0%, #ca8a04 100%);
+    --glass: rgba(250, 204, 21, 0.04);
+    --glass-border: rgba(250, 204, 21, 0.12);
 }
 
 html {
@@ -39,18 +40,17 @@ body::before {
     position: fixed;
     inset: 0;
     background: url('images/fon.jpg') center/cover no-repeat;
-    opacity: 0.25;
+    opacity: 0.3;
     z-index: -3;
-    filter: blur(2px);
 }
 
 body::after {
     content: '';
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at 20% 20%, rgba(167, 139, 250, 0.15), transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.15), transparent 50%),
-                linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+    background: radial-gradient(circle at 20% 20%, rgba(250, 204, 21, 0.12), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.12), transparent 50%),
+                linear-gradient(180deg, rgba(10,10,10,0.85) 0%, rgba(0,0,0,0.95) 100%);
     z-index: -2;
 }
 
@@ -67,12 +67,12 @@ body::after {
     padding: 0 24px;
 }
 
-/* Декоративные блабы */
+/* Декоративные блобы */
 .blob {
     position: fixed;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.35;
+    filter: blur(100px);
+    opacity: 0.25;
     z-index: -1;
     pointer-events: none;
     animation: blobFloat 20s ease-in-out infinite;
@@ -113,7 +113,7 @@ body::after {
 }
 
 .header.scrolled {
-    background: rgba(10, 10, 20, 0.85);
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--glass-border);
@@ -142,7 +142,7 @@ body::after {
     list-style: none;
     gap: 8px;
     padding: 6px;
-    background: var(--glass);
+    background: rgba(250, 204, 21, 0.05);
     border: 1px solid var(--glass-border);
     border-radius: 100px;
     backdrop-filter: blur(10px);
@@ -159,13 +159,13 @@ body::after {
 }
 
 .nav-menu a:hover {
-    color: var(--text);
-    background: rgba(255, 255, 255, 0.06);
+    color: #000;
+    background: var(--primary);
 }
 
 .nav-toggle {
     display: none;
-    background: var(--glass);
+    background: rgba(250, 204, 21, 0.05);
     border: 1px solid var(--glass-border);
     border-radius: 10px;
     padding: 10px;
@@ -177,7 +177,7 @@ body::after {
 .nav-toggle span {
     width: 20px;
     height: 2px;
-    background: var(--text);
+    background: var(--primary);
     border-radius: 2px;
     transition: 0.3s;
 }
@@ -205,27 +205,28 @@ body::after {
     align-items: center;
     gap: 8px;
     padding: 6px 14px;
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
+    background: rgba(250, 204, 21, 0.08);
+    border: 1px solid rgba(250, 204, 21, 0.25);
     border-radius: 100px;
     font-size: 0.8rem;
-    color: var(--text-muted);
+    color: var(--primary);
     margin-bottom: 24px;
     backdrop-filter: blur(10px);
+    font-weight: 500;
 }
 
 .badge-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #10b981;
-    box-shadow: 0 0 10px #10b981;
+    background: var(--primary);
+    box-shadow: 0 0 10px var(--primary);
     animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
 }
 
 .hero-title {
@@ -276,7 +277,7 @@ body::after {
 
 .btn-primary {
     background: var(--gradient);
-    color: white;
+    color: #000;
     box-shadow: 0 10px 30px -10px var(--primary);
 }
 
@@ -294,14 +295,16 @@ body::after {
 }
 
 .btn-ghost {
-    background: var(--glass);
+    background: rgba(250, 204, 21, 0.05);
     color: var(--text);
     border: 1px solid var(--glass-border);
     backdrop-filter: blur(10px);
 }
 
 .btn-ghost:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(250, 204, 21, 0.1);
+    border-color: var(--primary);
+    color: var(--primary);
     transform: translateY(-2px);
 }
 
@@ -346,7 +349,7 @@ body::after {
     width: 100%;
     max-width: 520px;
     height: auto;
-    filter: drop-shadow(0 20px 60px rgba(167, 139, 250, 0.3));
+    filter: drop-shadow(0 20px 60px rgba(250, 204, 21, 0.25));
 }
 
 .orbit-1 { animation: rotate 30s linear infinite; transform-origin: 250px 250px; }
@@ -403,8 +406,8 @@ body::after {
 .section-tag {
     display: inline-block;
     padding: 6px 16px;
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
+    background: rgba(250, 204, 21, 0.08);
+    border: 1px solid rgba(250, 204, 21, 0.25);
     border-radius: 100px;
     font-size: 0.8rem;
     color: var(--primary);
@@ -437,7 +440,7 @@ body::after {
 }
 
 .feature-card {
-    background: var(--glass);
+    background: rgba(250, 204, 21, 0.03);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     padding: 32px 28px;
@@ -462,8 +465,9 @@ body::after {
 
 .feature-card:hover {
     transform: translateY(-8px);
-    border-color: rgba(167, 139, 250, 0.3);
-    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(250, 204, 21, 0.4);
+    background: rgba(250, 204, 21, 0.06);
+    box-shadow: 0 20px 40px -20px rgba(250, 204, 21, 0.3);
 }
 
 .feature-card:hover::before {
@@ -488,6 +492,7 @@ body::after {
     font-size: 1.25rem;
     margin-bottom: 10px;
     font-weight: 700;
+    color: var(--primary);
 }
 
 .feature-card p {
@@ -505,7 +510,7 @@ body::after {
 
 .service-card {
     position: relative;
-    background: var(--glass);
+    background: rgba(250, 204, 21, 0.03);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     padding: 36px 32px;
@@ -517,13 +522,15 @@ body::after {
 }
 
 .service-card.featured {
-    border-color: rgba(167, 139, 250, 0.35);
-    background: linear-gradient(135deg, rgba(167, 139, 250, 0.08), rgba(236, 72, 153, 0.05));
+    border-color: rgba(250, 204, 21, 0.5);
+    background: linear-gradient(135deg, rgba(250, 204, 21, 0.08), rgba(245, 158, 11, 0.04));
+    box-shadow: 0 0 60px -20px rgba(250, 204, 21, 0.4);
 }
 
 .service-card:hover {
     transform: translateY(-10px);
-    border-color: rgba(167, 139, 250, 0.5);
+    border-color: rgba(250, 204, 21, 0.6);
+    box-shadow: 0 30px 60px -30px rgba(250, 204, 21, 0.5);
 }
 
 .service-glow {
@@ -532,7 +539,7 @@ body::after {
     right: -50%;
     width: 200px;
     height: 200px;
-    background: radial-gradient(circle, rgba(167, 139, 250, 0.4), transparent 70%);
+    background: radial-gradient(circle, rgba(250, 204, 21, 0.4), transparent 70%);
     opacity: 0;
     transition: opacity 0.4s ease;
     pointer-events: none;
@@ -549,7 +556,7 @@ body::after {
     font-family: 'Playfair Display', serif;
     font-size: 2.5rem;
     font-weight: 900;
-    color: rgba(255, 255, 255, 0.06);
+    color: rgba(250, 204, 21, 0.1);
     line-height: 1;
 }
 
@@ -586,11 +593,11 @@ body::after {
 
 .service-tags span {
     padding: 5px 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border);
+    background: rgba(250, 204, 21, 0.08);
+    border: 1px solid rgba(250, 204, 21, 0.2);
     border-radius: 100px;
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: var(--primary);
     font-weight: 500;
 }
 
@@ -634,7 +641,7 @@ body::after {
     align-items: center;
     gap: 16px;
     padding: 16px;
-    background: var(--glass);
+    background: rgba(250, 204, 21, 0.03);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     backdrop-filter: blur(10px);
@@ -643,7 +650,8 @@ body::after {
 
 .contact-item:hover {
     transform: translateX(6px);
-    border-color: rgba(167, 139, 250, 0.4);
+    border-color: rgba(250, 204, 21, 0.5);
+    background: rgba(250, 204, 21, 0.06);
 }
 
 .contact-icon {
@@ -654,7 +662,7 @@ body::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: #000;
     flex-shrink: 0;
 }
 
@@ -672,7 +680,7 @@ body::after {
 }
 
 .contact-form {
-    background: var(--glass);
+    background: rgba(250, 204, 21, 0.03);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     padding: 36px;
@@ -701,7 +709,7 @@ body::after {
 .form-group textarea {
     width: 100%;
     padding: 14px 18px;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(0, 0, 0, 0.4);
     border: 1px solid var(--glass-border);
     border-radius: 12px;
     color: var(--text);
@@ -713,20 +721,20 @@ body::after {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: rgba(161, 161, 181, 0.5);
+    color: rgba(161, 161, 161, 0.5);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
     border-color: var(--primary);
-    background: rgba(167, 139, 250, 0.05);
-    box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.1);
+    background: rgba(250, 204, 21, 0.05);
+    box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.1);
 }
 
 /* === FOOTER === */
 .footer {
-    background: rgba(5, 5, 10, 0.7);
+    background: rgba(0, 0, 0, 0.7);
     border-top: 1px solid var(--glass-border);
     backdrop-filter: blur(20px);
     padding: 64px 0 0;
@@ -749,6 +757,7 @@ body::after {
     font-weight: 800;
     letter-spacing: 2px;
     margin-bottom: 12px;
+    color: var(--primary);
 }
 
 .footer-brand p {
@@ -761,6 +770,7 @@ body::after {
     font-size: 0.9rem;
     margin-bottom: 18px;
     font-weight: 700;
+    color: var(--primary);
 }
 
 .footer-col a {
@@ -827,7 +837,7 @@ body::after {
         left: 24px;
         right: 24px;
         flex-direction: column;
-        background: rgba(10, 10, 20, 0.95);
+        background: rgba(0, 0, 0, 0.95);
         backdrop-filter: blur(20px);
         border: 1px solid var(--glass-border);
         border-radius: 20px;
