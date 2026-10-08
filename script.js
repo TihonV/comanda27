@@ -139,3 +139,35 @@ if (logoutBtn) {
         }
     });
 }
+/* ============================================
+   ПАРАЛЛАКС ФОНОВОЙ ГЕОМЕТРИИ
+   ============================================ */
+const decor = document.getElementById('backgroundDecor');
+
+if (decor) {
+    const shapes = decor.querySelectorAll('.decor-shape');
+
+    document.addEventListener('mousemove', (e) => {
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+
+        const dx = (e.clientX - cx) / cx; // -1 .. 1
+        const dy = (e.clientY - cy) / cy;
+
+        shapes.forEach(shape => {
+            const speed = parseFloat(shape.dataset.speed) || 0.5;
+            const moveX = dx * 30 * speed;
+            const moveY = dy * 30 * speed;
+
+            // Сохраняем вращение (rotate) и добавляем смещение через translate
+            shape.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+    });
+
+    // Плавное возвращение в центр при уходе курсора
+    document.addEventListener('mouseleave', () => {
+        shapes.forEach(shape => {
+            shape.style.transform = 'translate(0, 0)';
+        });
+    });
+}
