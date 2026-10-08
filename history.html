@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История использований</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .history-table {
+            padding: 12px;
+            overflow: hidden;
+        }
+
+        .table-header, .table-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1.5fr 0.8fr;
+            align-items: center;
+            padding: 20px 28px;
+            gap: 20px;
+        }
+
+        .table-header {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            padding-bottom: 12px;
+        }
+
+        .table-row {
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--radius-md);
+            margin-bottom: 8px;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .table-row:hover {
+            background: rgba(46, 204, 113, 0.06);
+            transform: translateX(4px);
+        }
+
+        .student-cell {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .student-avatar {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .student-avatar svg { width: 24px; height: 24px; }
+
+        .time-cell {
+            color: var(--accent);
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .group-cell { color: var(--text-secondary); }
+
+        @media (max-width: 700px) {
+            .table-header { display: none; }
+            .table-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 18px;
+            }
+            .time-cell { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <div class="top-bar">
+            <a href="user_main.html" class="back-btn">←</a>
+            <h1 class="page-title">История использований</h1>
+        </div>
+
+        <div class="history-table glass-panel">
+            <div class="table-header">
+                <span>Ученик</span>
+                <span>Группа</span>
+                <span style="text-align:right;">Время</span>
+            </div>
+
+            <div class="table-row">
+                <div class="student-cell">
+                    <div class="student-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <span>Иван Иванов</span>
+                </div>
+                <span class="group-cell">Machine Learning</span>
+                <span class="time-cell">13:00 – 14:00</span>
+            </div>
+
+            <div class="table-row">
+                <div class="student-cell">
+                    <div class="student-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <span>Пётр Петров</span>
+                </div>
+                <span class="group-cell">Deep Learning</span>
+                <span class="time-cell">13:00 – 14:00</span>
+            </div>
+
+            <div class="table-row">
+                <div class="student-cell">
+                    <div class="student-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <span>Анна Смирнова</span>
+                </div>
+                <span class="group-cell">Computer Vision</span>
+                <span class="time-cell">12:00 – 13:00</span>
+            </div>
+
+            <div class="table-row">
+                <div class="student-cell">
+                    <div class="student-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <span>Дмитрий Козлов</span>
+                </div>
+                <span class="group-cell">Machine Learning</span>
+                <span class="time-cell">11:00 – 12:00</span>
+            </div>
+
+            <div class="table-row">
+                <div class="student-cell">
+                    <div class="student-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <span>Елена Новикова</span>
+                </div>
+                <span class="group-cell">Deep Learning</span>
+                <span class="time-cell">10:00 – 11:00</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
