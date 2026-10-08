@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 28px;
+            flex: 1;
+        }
+
+        /* Центральная зона */
+        .main-zone {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .hero-action {
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 380px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-action::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(46,204,113,0.12) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.15); opacity: 1; }
+        }
+
+        .hero-action > * { position: relative; z-index: 1; }
+
+        .gpu-slots {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 36px;
+        }
+
+        .gpu-slot {
+            width: 40px;
+            height: 90px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gpu-slot.active {
+            background: linear-gradient(180deg, var(--accent) 0%, var(--accent-dark) 100%);
+            border-color: var(--accent);
+            box-shadow: 0 0 25px var(--accent-glow);
+        }
+
+        .gpu-slot.active::after {
+            content: '';
+            position: absolute;
+            top: 8px; left: 50%;
+            transform: translateX(-50%);
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 8px #fff;
+        }
+
+        .hero-action h2 {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+        }
+
+        .hero-action p {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            max-width: 400px;
+        }
+
+        /* Список доступных групп */
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title h3 { font-size: 1.25rem; }
+
+        .groups-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .group-card {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .group-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--card-hover-border);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+        }
+
+        .group-avatar {
+            width: 56px; height: 56px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(46,204,113,0.2), rgba(46,204,113,0.05));
+            border: 1px solid rgba(46,204,113,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px;
+        }
+
+        .group-name {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .group-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(46,204,113,0.12);
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        /* Правая панель */
+        .side-panel {
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 24px;
+        }
+
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .profile-avatar {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .profile-avatar svg { width: 34px; height: 34px; }
+
+        .profile-info h4 { font-size: 1rem; margin-bottom: 4px; }
+        .profile-info p { font-size: 0.8rem; color: var(--text-secondary); }
+
+        .history-item {
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: var(--transition);
+        }
+
+        .history-item:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: var(--card-border);
+        }
+
+        .history-avatar {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .history-avatar svg { width: 24px; height: 24px; }
+
+        .history-text h5 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .history-text span {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .history-link {
+            display: block;
+            text-align: center;
+            padding: 12px;
+            margin-top: 8px;
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: var(--transition);
+            border-radius: var(--radius-sm);
+        }
+
+        .history-link:hover { background: rgba(46,204,113,0.08); }
+
+        @media (max-width: 900px) {
+            .layout { grid-template-columns: 1fr; }
+            .side-panel { position: static; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <div class="top-bar">
+            <a href="index.html" class="back-btn">←</a>
+            <h1 class="page-title">Личный кабинет</h1>
+        </div>
+
+        <div class="layout">
+            <!-- Левая часть -->
+            <div class="main-zone">
+                <div class="hero-action glass-panel">
+                    <div class="gpu-slots">
+                        <div class="gpu-slot active"></div>
+                        <div class="gpu-slot active"></div>
+                        <div class="gpu-slot active"></div>
+                        <div class="gpu-slot"></div>
+                    </div>
+                    <h2>GPU готовы к работе</h2>
+                    <p>3 из 4 слотов свободны. Нажмите кнопку, чтобы начать сессию.</p>
+                    <button class="btn btn-primary">Использовать GPU</button>
+                </div>
+
+                <div>
+                    <div class="section-title">
+                        <h3>Доступные группы</h3>
+                        <a href="#" style="color: var(--accent); font-size:0.85rem; font-weight:600;">Все →</a>
+                    </div>
+                    <div class="groups-list">
+                        <div class="group-card glass-panel">
+                            <div class="group-avatar">🧠</div>
+                            <div class="group-name">Machine Learning</div>
+                            <div class="group-meta">
+                                <span>4 студента</span>
+                                <span class="badge">25% GPU</span>
+                            </div>
+                        </div>
+                        <div class="group-card glass-panel">
+                            <div class="group-avatar">⚡</div>
+                            <div class="group-name">Deep Learning</div>
+                            <div class="group-meta">
+                                <span>6 студентов</span>
+                                <span class="badge">15% GPU</span>
+                            </div>
+                        </div>
+                        <div class="group-card glass-panel">
+                            <div class="group-avatar">🚀</div>
+                            <div class="group-name">Computer Vision</div>
+                            <div class="group-meta">
+                                <span>3 студента</span>
+                                <span class="badge">30% GPU</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая панель -->
+            <aside class="side-panel glass-panel">
+                <div class="profile-card">
+                    <div class="profile-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <div class="profile-info">
+                        <h4>Александр Александрович</h4>
+                        <p>Студент • ML-группа</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="font-size:1rem; margin-bottom:16px;">История</h3>
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <div class="history-item">
+                            <div class="history-avatar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </div>
+                            <div class="history-text">
+                                <h5>weqoiweqwe</h5>
+                                <span>13:00 – 14:00</span>
+                            </div>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-avatar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </div>
+                            <div class="history-text">
+                                <h5>Lorem ipsum</h5>
+                                <span>12:00 – 13:00</span>
+                            </div>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-avatar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </div>
+                            <div class="history-text">
+                                <h5>Lorem ipsum</h5>
+                                <span>11:00 – 12:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="history.html" class="history-link">Вся история →</a>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+</body>
+</html>
