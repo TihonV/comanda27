@@ -1,4 +1,4 @@
-// === Частицы на фоне ===
+// === Частицы на фоне (жёлтые) ===
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -16,7 +16,7 @@ class Particle {
         this.size = Math.random() * 2 + 0.5;
         this.speedX = (Math.random() - 0.5) * 0.4;
         this.speedY = (Math.random() - 0.5) * 0.4;
-        this.opacity = Math.random() * 0.5 + 0.2;
+        this.opacity = Math.random() * 0.6 + 0.3;
     }
 
     update() {
@@ -40,7 +40,7 @@ class Particle {
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(167, 139, 250, ${this.opacity})`;
+        ctx.fillStyle = `rgba(250, 204, 21, ${this.opacity})`;
         ctx.fill();
     }
 }
@@ -62,7 +62,7 @@ function connectParticles() {
 
             if (dist < 120) {
                 ctx.beginPath();
-                ctx.strokeStyle = `rgba(167, 139, 250, ${0.15 * (1 - dist / 120)})`;
+                ctx.strokeStyle = `rgba(250, 204, 21, ${0.15 * (1 - dist / 120)})`;
                 ctx.lineWidth = 1;
                 ctx.moveTo(particles[i].x, particles[i].y);
                 ctx.lineTo(particles[j].x, particles[j].y);
@@ -186,7 +186,7 @@ contactForm.addEventListener('submit', (e) => {
     const btn = contactForm.querySelector('button[type="submit"]');
     const originalText = btn.innerHTML;
     btn.innerHTML = '✓ Отправлено!';
-    btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+    btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
 
     setTimeout(() => {
         btn.innerHTML = originalText;
